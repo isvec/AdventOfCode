@@ -102,5 +102,18 @@ input_value = """137857
 import math
 
 def calculateFuel(mass):
-  return math.trunc(mass/3)-2
+  result = math.trunc(int(mass)/3)-2
+  return 0 if result <= 0 else result
 
+def calculateRealFuel(mass):
+  calculatedFuel = calculateFuel(mass)
+  if calculatedFuel > 0:
+    return calculatedFuel + calculateRealFuel(calculatedFuel)
+  else:
+    return 0
+
+split_input_value = input_value.split("\n")
+
+modulesWithoutFuel = sum(list(map(calculateRealFuel, split_input_value)))
+
+print(modulesWithoutFuel)
